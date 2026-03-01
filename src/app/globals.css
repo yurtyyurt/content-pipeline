@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #0a0a0a;
+  color: #f5f5f5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.kanban-scroll {
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+
+.kanban-col {
+  scroll-snap-align: start;
+  min-width: 280px;
+}
+
+.drag-over {
+  background: rgba(99, 102, 241, 0.05) !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
+}
+
+.card-dragging {
+  opacity: 0.4;
+  transform: scale(0.98);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.loading-dot {
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+.prose-output h1, .prose-output h2, .prose-output h3 {
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  color: #f5f5f5;
+}
+
+.prose-output h1 { font-size: 1.25rem; }
+.prose-output h2 { font-size: 1.1rem; }
+.prose-output h3 { font-size: 1rem; }
+
+.prose-output p {
+  margin-bottom: 0.75em;
+  line-height: 1.7;
+  color: #ccc;
+}
+
+.prose-output ul, .prose-output ol {
+  margin-bottom: 0.75em;
+  padding-left: 1.5em;
+  color: #ccc;
+}
+
+.prose-output li {
+  margin-bottom: 0.25em;
+  line-height: 1.6;
+}
+
+.prose-output strong {
+  color: #f5f5f5;
+  font-weight: 600;
+}
+
+.prose-output em {
+  color: #a5b4fc;
+}
+
+.prose-output code {
+  background: #1e1e1e;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.prose-output blockquote {
+  border-left: 3px solid #6366f1;
+  padding-left: 1em;
+  margin: 0.75em 0;
+  color: #aaa;
+}
+
+.prose-output hr {
+  border-color: #2a2a2a;
+  margin: 1.5em 0;
+}
