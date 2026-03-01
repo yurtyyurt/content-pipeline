@@ -64,22 +64,6 @@ export default function SettingsPage() {
               </a>
             </p>
           </div>
-
-          <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1.5">
-              X API Bearer Token <span className="text-gray-600">(optional)</span>
-            </label>
-            <input
-              type="password"
-              value={settings.xApiKey}
-              onChange={(e) => setSettings({ ...settings, xApiKey: e.target.value })}
-              placeholder="AAAA..."
-              className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 placeholder:text-gray-600"
-            />
-            <p className="text-[11px] text-gray-600 mt-1.5">
-              Enables live X/Twitter trend data and competitor monitoring
-            </p>
-          </div>
         </Section>
 
         <Section title="Content Profile" description="Helps AI generate better content for you">

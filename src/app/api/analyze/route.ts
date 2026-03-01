@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    const { apiKey, handle, platform, niche, notes, topContent } = await req.json();
+    const { apiKey, handle, platform, niche, notes, topContent, brainContext } = await req.json();
 
     if (!apiKey) {
       return NextResponse.json({ error: 'Claude API key is required. Add it in Settings.' }, { status: 400 });
@@ -26,7 +26,11 @@ export async function POST(req: NextRequest) {
       })
       .join('\n') || 'No content data provided';
 
-    const systemPrompt = `You are a competitive intelligence analyst specializing in social media content strategy. You analyze competitor accounts to extract actionable insights.${niche ? `\nAnalyzing within the ${niche} niche.` : ''}`;
+    let systemPrompt = `You are a competitive intelligence analyst specializing in social media content strategy. You analyze competitor accounts to extract actionable insights.${niche ? `\nAnalyzing within the ${niche} niche.` : ''}`;
+
+    if (brainContext) {
+      systemPrompt += `\n${brainContext}`;
+    }
 
     const userPrompt = `Analyze this competitor on ${platformLabel}:
 

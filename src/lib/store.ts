@@ -2,7 +2,7 @@ import { AppState, DEFAULT_SETTINGS } from './types';
 import { SEED_STATE } from './seed-data';
 
 const STORAGE_KEY = 'content-pipeline-state';
-const SEEDED_KEY = 'content-pipeline-seeded';
+const SEEDED_KEY = 'content-pipeline-seeded-v2';
 
 export function loadState(): AppState {
   if (typeof window === 'undefined') return SEED_STATE;
@@ -14,6 +14,8 @@ export function loadState(): AppState {
         ...SEED_STATE,
         ...parsed,
         settings: { ...DEFAULT_SETTINGS, ...parsed.settings },
+        brain: parsed.brain || SEED_STATE.brain,
+        chat: parsed.chat || [],
       };
     }
     // First visit — seed with research data

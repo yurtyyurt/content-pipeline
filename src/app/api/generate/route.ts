@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    const { apiKey, platform, contentType, topic, context, brandVoice, niche, targetAudience } =
+    const { apiKey, platform, contentType, topic, context, brandVoice, niche, targetAudience, brainContext } =
       await req.json();
 
     if (!apiKey) {
@@ -24,10 +24,14 @@ export async function POST(req: NextRequest) {
       .filter(Boolean)
       .join('\n');
 
-    const systemPrompt = `You are an elite social media content strategist who creates viral, high-performing content for TikTok and X (Twitter). You understand platform algorithms, audience psychology, and what makes content spread.
+    let systemPrompt = `You are an elite social media content strategist who creates viral, high-performing content for TikTok and X (Twitter). You understand platform algorithms, audience psychology, and what makes content spread.
 
 ${profileContext ? `\nCreator Profile:\n${profileContext}\n` : ''}
 Always be specific, actionable, and platform-native. No generic advice. Write content that sounds human, not AI-generated.`;
+
+    if (brainContext) {
+      systemPrompt += `\n${brainContext}`;
+    }
 
     let userPrompt = '';
 

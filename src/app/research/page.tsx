@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { loadState, saveState, genId } from '@/lib/store';
+import { buildBrainContext } from '@/lib/brain';
 import { Platform, ResearchResult } from '@/lib/types';
 import {
   Search,
@@ -34,13 +35,14 @@ export default function ResearchPage() {
     setCurrentResult('');
 
     const state = loadState();
+    const brainContext = buildBrainContext(state);
     const { claudeApiKey, niche, targetAudience } = state.settings;
 
     try {
       const res = await fetch('/api/research', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ apiKey: claudeApiKey, topic, platform, niche, targetAudience }),
+        body: JSON.stringify({ apiKey: claudeApiKey, topic, platform, niche, targetAudience, brainContext }),
       });
 
       const data = await res.json();

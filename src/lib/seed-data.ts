@@ -5,7 +5,6 @@ const now = '2026-03-01T13:00:00.000Z';
 export const SEED_STATE: AppState = {
   settings: {
     claudeApiKey: '',
-    xApiKey: '',
     niche: 'Capital allocation, AI infrastructure investing, real estate, crypto — targeting young operators and aspiring capital allocators',
     targetAudience: 'Ambitious 18-30 year olds interested in real asset accumulation, AI/tech investing, crypto, and building generational wealth through unconventional paths',
     brandVoice: 'Direct, data-driven, contrarian. No fluff. Speak like an operator who has skin in the game — because you do. Mix hard numbers with philosophical takes. Think Marcus Aurelius meets a Bloomberg terminal. Use "Land and Math" as a recurring thesis anchor.',
@@ -299,4 +298,21 @@ Hormozi talks about business. Balaji talks about AI macro. Nobody is showing how
       createdAt: now, updatedAt: now,
     },
   ],
+  brain: [
+    { id: 'brain_01', category: 'identity', title: 'Background', content: '20 years old, based in Dubai. Turned $200 into $1M in crypto at 19 (2024) with no leverage. Currently managing a ~$1.2M liquid portfolio focused on AI infrastructure (NVDA, TSM, ASML) + BTC.', createdAt: now, updatedAt: now },
+    { id: 'brain_02', category: 'identity', title: 'Real Estate', content: '22 plots / 30+ acres of land in Cyprus — building a self-sustaining compound. Family has a multi-million GBP UK real estate portfolio across multiple properties.', createdAt: now, updatedAt: now },
+    { id: 'brain_03', category: 'identity', title: 'Building', content: 'Building "Kronos" — an AI-powered real estate portfolio management SaaS. Brother handles video production for content. Positioning as "The Operator\'s Terminal."', createdAt: now, updatedAt: now },
+    { id: 'brain_04', category: 'identity', title: 'Core Thesis', content: '"Land and Math" — only two real assets survive the AI era: physical land (finite, non-replicable) and computation/math (AI, software). Everything else gets compressed.', createdAt: now, updatedAt: now },
+    { id: 'brain_05', category: 'identity', title: 'Lifestyle', content: 'Boxing 5x/week at dawn. Disciplined daily routine: train, portfolio review, build, create content. No university — chose capital allocation over traditional education.', createdAt: now, updatedAt: now },
+    { id: 'brain_06', category: 'content_dna', title: 'Best Formats', content: 'Data-backed threads with real portfolio numbers perform best on X. Day-in-my-life and "how I did X at age Y" formats work best on TikTok. Contrarian takes generate the most engagement.', createdAt: now, updatedAt: now },
+    { id: 'brain_07', category: 'content_dna', title: 'Content Pillars', content: '1) Portfolio transparency & allocation breakdowns 2) Cyprus land/compound build logs 3) AI infrastructure investing thesis 4) Contrarian takes on education/career 5) Operator lifestyle (boxing, discipline, Dubai)', createdAt: now, updatedAt: now },
+    { id: 'brain_08', category: 'content_dna', title: 'Voice Rules', content: 'Never be preachy. Lead with numbers, not opinions. Be the youngest person in the room who has done the thing. No flexing without teaching. Marcus Aurelius tone meets Bloomberg data.', createdAt: now, updatedAt: now },
+    { id: 'brain_09', category: 'audience', title: 'Core Audience', content: 'Ambitious 18-30 year olds who want to build wealth unconventionally. They\'re skeptical of traditional paths (university, 9-5) and hungry for real operator knowledge with receipts.', createdAt: now, updatedAt: now },
+    { id: 'brain_10', category: 'audience', title: 'What Resonates', content: 'Real numbers and transparency. The audience responds strongest to actual portfolio screenshots, deal breakdowns with math, and contrarian takes backed by personal experience. They hate vague "hustle" content.', createdAt: now, updatedAt: now },
+    { id: 'brain_11', category: 'lessons', title: 'Hook Lesson', content: 'The most engaging hooks start with a specific number or age. "$200 to $1M" outperforms "How I made money in crypto." Always lead with the most shocking data point.', createdAt: now, updatedAt: now },
+    { id: 'brain_12', category: 'lessons', title: 'Platform Lesson', content: 'X rewards consistency and thread depth — post 3-5x daily, engage in replies. TikTok rewards pattern interrupts in first 3 seconds and series content (Part 1/3 drives follows).', createdAt: now, updatedAt: now },
+    { id: 'brain_13', category: 'goals', title: '30-Day Goal', content: 'Launch content presence on both TikTok and X. Post first 10 pieces of content. Establish the "Land and Math" thesis as the core brand narrative.', createdAt: now, updatedAt: now },
+    { id: 'brain_14', category: 'goals', title: '90-Day Goal', content: 'Reach 10K followers on X, 50K on TikTok. Have 3 viral pieces (100K+ views). Establish weekly posting cadence: 5x/day X, 1-2x/day TikTok. Start Kronos build-in-public series.', createdAt: now, updatedAt: now },
+  ],
+  chat: [],
 };

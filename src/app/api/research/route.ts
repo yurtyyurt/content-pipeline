@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    const { apiKey, topic, platform, niche, targetAudience } = await req.json();
+    const { apiKey, topic, platform, niche, targetAudience, brainContext } = await req.json();
 
     if (!apiKey) {
       return NextResponse.json({ error: 'Claude API key is required. Add it in Settings.' }, { status: 400 });
@@ -22,9 +22,13 @@ export async function POST(req: NextRequest) {
           ? 'X/Twitter'
           : 'TikTok';
 
-    const systemPrompt = `You are a social media trend analyst and content strategist. You have deep expertise in what performs well on TikTok and X/Twitter, including algorithm patterns, viral formats, and audience behavior.
+    let systemPrompt = `You are a social media trend analyst and content strategist. You have deep expertise in what performs well on TikTok and X/Twitter, including algorithm patterns, viral formats, and audience behavior.
 
 Provide specific, actionable intelligence — not generic advice. Reference real content patterns, formats, and strategies that are currently effective.${niche ? `\nThe creator's niche: ${niche}` : ''}${targetAudience ? `\nTarget audience: ${targetAudience}` : ''}`;
+
+    if (brainContext) {
+      systemPrompt += `\n${brainContext}`;
+    }
 
     const userPrompt = `Research content opportunities about "${topic}" for ${platformLabel}.
 

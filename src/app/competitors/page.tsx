@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { loadState, saveState, genId } from '@/lib/store';
+import { buildBrainContext } from '@/lib/brain';
 import { Competitor, TopContent, Platform } from '@/lib/types';
 import {
   Plus,
@@ -49,6 +50,7 @@ export default function CompetitorsPage() {
     setError('');
 
     const state = loadState();
+    const brainContext = buildBrainContext(state);
     const { claudeApiKey, niche } = state.settings;
 
     try {
@@ -62,6 +64,7 @@ export default function CompetitorsPage() {
           niche: niche || comp.niche,
           notes: comp.notes,
           topContent: comp.topContent,
+          brainContext,
         }),
       });
 

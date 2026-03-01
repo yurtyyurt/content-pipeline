@@ -4,13 +4,20 @@ import { useState, useEffect, useCallback } from 'react';
 import { loadState, saveState, genId } from '@/lib/store';
 import {
   ContentCard,
+  ContentMetrics,
   PipelineStage,
   Platform,
   ContentType,
   Priority,
   PIPELINE_STAGES,
 } from '@/lib/types';
-import { Plus, X, GripVertical, Calendar, Trash2, Edit3, ChevronDown } from 'lucide-react';
+import { Plus, X, GripVertical, Calendar, Trash2, Edit3, ChevronDown, BarChart3 } from 'lucide-react';
+
+function formatCompact(n: number): string {
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+  if (n >= 1_000) return (n / 1_000).toFixed(1).replace(/\.0$/, '') + 'K';
+  return n.toString();
+}
 
 export default function PipelinePage() {
   const [cards, setCards] = useState<ContentCard[]>([]);
@@ -51,9 +58,14 @@ export default function PipelinePage() {
 
   function handleDrop(stage: PipelineStage) {
     if (dragCardId) {
-      const updated = cards.map((c) =>
-        c.id === dragCardId ? { ...c, stage, updatedAt: new Date().toISOString() } : c
-      );
+      const updated = cards.map((c) => {
+        if (c.id !== dragCardId) return c;
+        const changes: Partial<ContentCard> = { stage, updatedAt: new Date().toISOString() };
+        if (stage === 'published' && !c.publishedAt) {
+          changes.publishedAt = new Date().toISOString().split('T')[0];
+        }
+        return { ...c, ...changes };
+      });
       persist(updated);
     }
     setDragCardId(null);
@@ -183,6 +195,15 @@ export default function PipelinePage() {
                         </span>
                       )}
                     </div>
+                    {card.stage === 'published' && card.metrics && (card.metrics.views || card.metrics.likes || card.metrics.comments) && (
+                      <div className="flex items-center gap-2.5 mt-1.5 text-[10px] text-gray-400">
+                        {card.metrics.views != null && <span>👁 {formatCompact(card.metrics.views)}</span>}
+                        {card.metrics.likes != null && <span>❤️ {formatCompact(card.metrics.likes)}</span>}
+                        {card.metrics.comments != null && <span>💬 {formatCompact(card.metrics.comments)}</span>}
+                        {card.metrics.shares != null && <span>🔄 {formatCompact(card.metrics.shares)}</span>}
+                        {card.metrics.saves != null && <span>🔖 {formatCompact(card.metrics.saves)}</span>}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -371,6 +392,70 @@ function CardModal({
               className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 resize-none font-mono text-xs"
             />
           </div>
+          {form.stage === 'published' && (
+            <>
+              <div className="border-t border-dark-500 pt-4 mt-2">
+                <div className="flex items-center gap-2 mb-3">
+                  <BarChart3 className="w-4 h-4 text-accent" />
+                  <span className="text-xs font-semibold text-gray-300">Performance Metrics</span>
+                </div>
+                <div className="grid grid-cols-5 gap-2 mb-3">
+                  {(['views', 'likes', 'comments', 'shares', 'saves'] as const).map((metric) => (
+                    <div key={metric}>
+                      <label className="block text-[10px] font-medium text-gray-500 mb-1 capitalize">{metric}</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={form.metrics?.[metric] ?? ''}
+                        onChange={(e) =>
+                          setForm({
+                            ...form,
+                            metrics: {
+                              ...form.metrics,
+                              [metric]: e.target.value === '' ? undefined : Number(e.target.value),
+                            },
+                          })
+                        }
+                        placeholder="0"
+                        className="w-full bg-dark-700 border border-dark-500 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-accent/50"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-400 mb-1">Published URL</label>
+                    <input
+                      type="text"
+                      value={form.publishedUrl || ''}
+                      onChange={(e) => setForm({ ...form, publishedUrl: e.target.value })}
+                      placeholder="https://..."
+                      className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-400 mb-1">Published Date</label>
+                    <input
+                      type="date"
+                      value={form.publishedAt || ''}
+                      onChange={(e) => setForm({ ...form, publishedAt: e.target.value })}
+                      className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 mb-1">Performance Notes</label>
+                  <textarea
+                    value={form.performanceNotes || ''}
+                    onChange={(e) => setForm({ ...form, performanceNotes: e.target.value })}
+                    placeholder="What worked, what didn't, insights..."
+                    rows={2}
+                    className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 resize-none"
+                  />
+                </div>
+              </div>
+            </>
+          )}
           <div className="flex items-center justify-between pt-2">
             {onDelete && (
               <button

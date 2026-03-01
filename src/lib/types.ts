@@ -3,6 +3,17 @@ export type ContentType = 'script' | 'thread' | 'post' | 'hook' | 'concept';
 export type Priority = 'high' | 'medium' | 'low';
 export type PipelineStage = 'idea' | 'research' | 'draft' | 'review' | 'scheduled' | 'published';
 
+export type BrainCategory = 'identity' | 'content_dna' | 'audience' | 'lessons' | 'goals';
+
+export interface ContentMetrics {
+  views?: number;
+  likes?: number;
+  comments?: number;
+  shares?: number;
+  saves?: number;
+  followers?: number;
+}
+
 export interface ContentCard {
   id: string;
   title: string;
@@ -15,6 +26,10 @@ export interface ContentCard {
   assignee?: string;
   notes: string;
   content?: string;
+  metrics?: ContentMetrics;
+  publishedUrl?: string;
+  publishedAt?: string;
+  performanceNotes?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -45,9 +60,24 @@ export interface ResearchResult {
   createdAt: string;
 }
 
+export interface BrainEntry {
+  id: string;
+  category: BrainCategory;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  createdAt: string;
+}
+
 export interface AppSettings {
   claudeApiKey: string;
-  xApiKey: string;
   niche: string;
   brandVoice: string;
   targetAudience: string;
@@ -57,8 +87,18 @@ export interface AppState {
   cards: ContentCard[];
   competitors: Competitor[];
   research: ResearchResult[];
+  brain: BrainEntry[];
+  chat: ChatMessage[];
   settings: AppSettings;
 }
+
+export const BRAIN_CATEGORIES: { key: BrainCategory; label: string; icon: string; description: string }[] = [
+  { key: 'identity', label: 'Identity', icon: '🧬', description: 'Who you are, your background, positioning, and thesis' },
+  { key: 'content_dna', label: 'Content DNA', icon: '🎯', description: 'What topics, formats, and hooks perform best for you' },
+  { key: 'audience', label: 'Audience', icon: '👥', description: 'What your audience responds to, engagement patterns' },
+  { key: 'lessons', label: 'Lessons', icon: '💡', description: 'What you\'ve learned about content and growth' },
+  { key: 'goals', label: 'Goals', icon: '🎯', description: 'Your 30/60/90 day content and growth goals' },
+];
 
 export const PIPELINE_STAGES: { key: PipelineStage; label: string; color: string }[] = [
   { key: 'idea', label: 'Ideas', color: '#6366f1' },
@@ -79,7 +119,6 @@ export const CONTENT_TYPES: { key: ContentType; label: string; platforms: Platfo
 
 export const DEFAULT_SETTINGS: AppSettings = {
   claudeApiKey: '',
-  xApiKey: '',
   niche: '',
   brandVoice: '',
   targetAudience: '',

@@ -12,15 +12,19 @@ import {
   Zap,
   Menu,
   X,
+  MessageSquare,
+  Brain,
 } from 'lucide-react';
 import { useState } from 'react';
 
 const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/research', label: 'Research', icon: Search },
+  { href: '/chat', label: 'Chat', icon: MessageSquare },
   { href: '/create', label: 'Create', icon: Sparkles },
   { href: '/pipeline', label: 'Pipeline', icon: Columns3 },
   { href: '/competitors', label: 'Competitors', icon: Users },
+  { href: '/brain', label: 'Brain', icon: Brain },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { loadState, saveState, genId } from '@/lib/store';
+import { buildBrainContext } from '@/lib/brain';
 import { ContentType, Platform, CONTENT_TYPES } from '@/lib/types';
 import { Sparkles, Copy, Save, Check, Loader2, AlertCircle, ChevronDown } from 'lucide-react';
 
@@ -34,6 +35,7 @@ export default function CreatePage() {
     setOutput('');
 
     const state = loadState();
+    const brainContext = buildBrainContext(state);
     const { claudeApiKey, brandVoice, niche, targetAudience } = state.settings;
 
     try {
@@ -49,6 +51,7 @@ export default function CreatePage() {
           brandVoice,
           niche,
           targetAudience,
+          brainContext,
         }),
       });
 
