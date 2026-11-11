@@ -1,0 +1,28 @@
+services:
+  - type: worker
+    name: deadcoinpulse-collector
+    runtime: node
+    plan: standard
+    region: frankfurt
+    rootDir: render-deadcoinpulse
+    buildCommand: node download.mjs
+    startCommand: node --use-env-proxy start.mjs
+    autoDeploy: false
+    numInstances: 1
+    disk:
+      name: pulse-runtime
+      mountPath: /var/data
+      sizeGB: 10
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.1
+      - key: STATE_PATH
+        value: /var/data/pulse/state.json
+      - key: PULSE_SITE_URL
+        sync: false
+      - key: PULSE_SITE_ACCESS_TOKEN
+        sync: false
+      - key: PULSE_RUNNER_KEY
+        sync: false
+      - key: PULSE_BOT_SHA256
+        sync: false
